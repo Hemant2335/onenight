@@ -2,46 +2,55 @@ import Image from "next/image";
 
 const Header = () => {
   return (
-    // Set a height for the banner, h-screen usually works well for a hero
     <div className="w-full h-screen relative text-white">
       
+      {/* Background Image */}
       <Image
-        src="/assets/banner.jpeg" // <-- Make sure this path is correct
+        src="/assets/banner.jpeg"
         fill={true}
         alt="Dubai Skyline Banner"
-        className="w-full h-full object-cover -z-10" 
+        className="object-cover object-center -z-10" 
+        priority
       />
 
-      <div className="absolute inset-0 flex flex-col justify-center items-center text-center p-4">
-        
+      {/* Overlay for better text readability */}
+      <div className="absolute inset-0 bg-black/20 -z-5"></div>
 
-        <div className="mt-[25vw]"></div>
+      {/* Main Content */}
+      <div className="absolute inset-0 flex flex-col justify-center items-center text-center px-4 sm:px-6 md:px-8">
+        
+        <div className="mt-96 lg:mt-96"></div>
+
         {/* Festival Info Text */}
-        {/* Using a fragment and simple spans, centered by the parent */}
-        <div className="flex flex-col items-center font-light tracking-wider space-y-1 ">
-          <span className="text-base text-yellow-100 font-normal">MUSICAL CULTURAL FESTIVAL</span>
-          <span className="text-sm md:text-base mt-1 text-yellow-100 font-normal">ARTIST REVEAL</span>
-          {/* Corrected to 14TH NOV */}
-          <span className="text-sm md:text-base text-yellow-100 font-normal">ON 14TH NOV</span>
-          {/* Added missing "DUBAI ISLANDS" text */}
-          <span className="text-sm md:text-base mt-3 text-gray-400 font-normal">DUBAI ISLANDS</span>
+        <div className="flex flex-col items-center font-light tracking-wider space-y-1.5 sm:space-y-2">
+          <span className="text-sm sm:text-base md:text-lg lg:text-xl text-yellow-100 font-normal">
+            MUSICAL CULTURAL FESTIVAL
+          </span>
+          <span className="text-xs sm:text-sm md:text-base text-yellow-100 font-normal mt-1 sm:mt-2">
+            ARTIST REVEAL
+          </span>
+          <span className="text-xs sm:text-sm md:text-base text-yellow-100 font-normal">
+            ON 14TH NOV
+          </span>
+          <span className="text-xs sm:text-sm md:text-base mt-2 sm:mt-3 text-gray-300 font-normal">
+            DUBAI ISLANDS
+          </span>
         </div>
 
         {/* Find Out More Button */}
-        <button className="border border-white/70 text-white px-8 py-2 mt-8 rounded-sm text-xs md:text-sm tracking-widest hover:bg-white/10 transition-colors duration-300">
+        <button className="border border-white/70 text-white px-6 py-2 sm:px-8 sm:py-2.5 md:px-10 md:py-3 mt-6 sm:mt-8 md:mt-10 rounded-sm text-xs sm:text-sm md:text-base tracking-widest hover:bg-white/10 active:bg-white/20 transition-colors duration-300">
           FIND OUT MORE
         </button>
       </div>
 
-      {/* 3. Hamburger Menu Icon (Bottom Left) */}
-      {/* Positioned separately from the centered content */}
+      {/* Hamburger Menu Icon */}
       <button
         aria-label="Open menu"
-        className="absolute bottom-8 left-8 w-12 h-12 bg-blue-600/80 rounded-full flex flex-col items-center justify-center space-y-1.5 p-2 transition-transform hover:scale-105"
+        className="absolute bottom-4 left-4 sm:bottom-6 sm:left-6 md:bottom-8 md:left-8 w-10 h-10 sm:w-12 sm:h-12 bg-blue-600/80 rounded-full flex flex-col items-center justify-center space-y-1 sm:space-y-1.5 p-2 transition-transform hover:scale-105 active:scale-95"
       >
-        <span className="w-6 h-0.5 bg-white block"></span>
-        <span className="w-6 h-0.5 bg-white block"></span>
-        <span className="w-6 h-0.5 bg-white block"></span>
+        <span className="w-5 h-0.5 sm:w-6 bg-white block"></span>
+        <span className="w-5 h-0.5 sm:w-6 bg-white block"></span>
+        <span className="w-5 h-0.5 sm:w-6 bg-white block"></span>
       </button>
     </div>
   );

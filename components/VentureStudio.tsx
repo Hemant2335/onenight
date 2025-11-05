@@ -25,11 +25,11 @@ const tabs = ["Fintech", "Energy", "Space", "Entertainment", "Healthcare"];
 
 export default function VentureStudio() {
   return (
-    <section className="bg-gray-50/50 py-16 px-4 sm:px-6 lg:px-8">
+    <section className="bg-gray-50/50 pt-16 lg:px-8">
       {/* Main container with a subtle background */}
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-stretch">
         {/* === Left Column === */}
-        <div className="flex flex-col items-center bg-[#f4f4f4] p-10 rounded-xl justify-between space-y-8 h-full">
+        <div className="flex flex-col items-center bg-[#f4f4f4] p-2 lg:p-10 rounded-xl justify-between space-y-8 h-full">
           {/* Logo */}
           <div className="w-48">
             {/* IMPORTANT: 
@@ -62,7 +62,7 @@ export default function VentureStudio() {
 
           {/* Inner description box */}
           <div className="bg-white border border-gray-200 rounded-lg p-6">
-            <p className="text-gray-700 text-center px-10 leading-relaxed">
+            <p className="text-gray-700 text-center lg:px-10 leading-relaxed">
               In the heart of Dubai, we integrate strategic insight, operational
               execution, and creative power to turn ambitious ideas into lasting
               global impact. Your next major venture, connection or cultural
@@ -72,7 +72,7 @@ export default function VentureStudio() {
         </div>
 
         {/* === Right Column === */}
-        <div className="flex flex-col space-y-6 bg-[#f4f4f4] p-10 rounded-lg h-full">
+        <div className="flex flex-col space-y-6 bg-[#f4f4f4] p-4 lg:p-10 rounded-lg h-full">
           {/* Category Tabs */}
           <div className="flex flex-wrap gap-x-4 gap-y-2">
             {tabs.map((tab) => (
