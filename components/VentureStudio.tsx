@@ -28,7 +28,8 @@ export default function VentureStudio() {
   return (
     <motion.section
       initial={{ opacity: 0, y: 50 }}
-      animate={{ opacity: 1, y: 0 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
       transition={{ duration: 0.5 }}
       className="bg-gray-50/50 pt-16 lg:px-8">
       {/* Main container with a subtle background */}
@@ -36,7 +37,8 @@ export default function VentureStudio() {
         {/* === Left Column === */}
         <motion.div
           initial={{ opacity: 0, x: -50 }}
-          animate={{ opacity: 1, x: 0 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.2 }}
           className="flex flex-col items-center bg-[#f4f4f4] p-6 md:p-2 lg:p-10 rounded-xl justify-between space-y-8 h-full">
           {/* Logo */}
@@ -79,7 +81,8 @@ export default function VentureStudio() {
         {/* === Right Column === */}
         <motion.div
           initial={{ opacity: 0, x: 50 }}
-          animate={{ opacity: 1, x: 0 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.2 }}
           className="flex flex-col space-y-6 bg-[#f4f4f4] p-6 md:p-4 lg:p-10 rounded-lg h-full">
           {/* Category Tabs */}
@@ -101,7 +104,8 @@ export default function VentureStudio() {
           {/* Service Cards */}
           <motion.div
             initial="hidden"
-            animate="visible"
+            whileInView="visible"
+            viewport={{ once: true }}
             variants={{
               visible: { transition: { staggerChildren: 0.2 } },
             }}

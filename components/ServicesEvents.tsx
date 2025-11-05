@@ -6,7 +6,8 @@ export default function ServicesEvents() {
   return (
     <motion.div
       initial={{ opacity: 0, y: 50 }}
-      animate={{ opacity: 1, y: 0 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
       transition={{ duration: 0.5 }}
       className="py-16 flex justify-center items-start">
       {/* Main container holding both panels */}
@@ -14,7 +15,8 @@ export default function ServicesEvents() {
         {/* Left Panel */}
         <motion.section
           initial={{ opacity: 0, x: -50 }}
-          animate={{ opacity: 1, x: 0 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.2 }}
           className="flex-1 bg-[#f4f4f4] rounded-2xl px-6 md:px-8 py-10 flex flex-col items-center">
           {/* Logo */}
@@ -35,7 +37,8 @@ export default function ServicesEvents() {
           {/* Cards */}
           <motion.div
             initial="hidden"
-            animate="visible"
+            whileInView="visible"
+            viewport={{ once: true }}
             variants={{
               visible: { transition: { staggerChildren: 0.2 } },
             }}
@@ -84,7 +87,8 @@ export default function ServicesEvents() {
         {/* Right Panel */}
         <motion.aside
           initial={{ opacity: 0, x: 50 }}
-          animate={{ opacity: 1, x: 0 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.2 }}
           className="flex-1 bg-[#f4f4f4] rounded-2xl shadow-lg px-6 md:px-8 py-8 flex flex-col">
           <h2 className="text-xl md:text-2xl font-bold text-gray-900 mb-5 text-center">
@@ -100,7 +104,8 @@ export default function ServicesEvents() {
           {/* Event Items */}
           <motion.div
             initial="hidden"
-            animate="visible"
+            whileInView="visible"
+            viewport={{ once: true }}
             variants={{
               visible: { transition: { staggerChildren: 0.1 } },
             }}
