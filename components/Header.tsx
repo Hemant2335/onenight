@@ -22,23 +22,23 @@ const Header = () => {
         <div className="mt-96 lg:mt-96"></div>
 
         {/* Festival Info Text */}
-        <div className="flex flex-col items-center font-light tracking-wider space-y-1.5 sm:space-y-2">
-          <span className="text-sm sm:text-base md:text-lg lg:text-xl text-yellow-100 font-normal">
+        <div className="flex flex-col items-center font-light tracking-wider space-y-2">
+          <span className="text-lg md:text-xl text-yellow-100 font-normal">
             MUSICAL CULTURAL FESTIVAL
           </span>
-          <span className="text-xs sm:text-sm md:text-base text-yellow-100 font-normal mt-1 sm:mt-2">
+          <span className="text-md md:text-lg mt-1 text-yellow-100 font-normal">
             ARTIST REVEAL
           </span>
-          <span className="text-xs sm:text-sm md:text-base text-yellow-100 font-normal">
+          <span className="text-md md:text-lg text-yellow-100 font-normal">
             ON 14TH NOV
           </span>
-          <span className="text-xs sm:text-sm md:text-base mt-2 sm:mt-3 text-gray-300 font-normal">
+          <span className="text-md md:text-lg mt-3 text-gray-400 font-normal">
             DUBAI ISLANDS
           </span>
         </div>
 
         {/* Find Out More Button */}
-        <button className="border border-white/70 text-white px-6 py-2 sm:px-8 sm:py-2.5 md:px-10 md:py-3 mt-6 sm:mt-8 md:mt-10 rounded-sm text-xs sm:text-sm md:text-base tracking-widest hover:bg-white/10 active:bg-white/20 transition-colors duration-300">
+        <button className="border border-white/70 text-white px-10 py-3 mt-8 rounded-sm text-sm md:text-base tracking-widest hover:bg-white/10 transition-colors duration-300">
           FIND OUT MORE
         </button>
       </div>

@@ -2,11 +2,11 @@ import Image from "next/image";
 
 export default function RiseEventsPanels() {
   return (
-    <div className="min-h-screen py-16   flex justify-center items-start">
+    <div className="py-16 flex justify-center items-start">
       {/* Main container holding both panels */}
-      <div className="w-full max-w-5xl flex flex-col md:flex-row gap-12">
+      <div className="w-full max-w-5xl flex flex-col md:flex-row gap-12 px-4">
         {/* Left Panel */}
-        <section className="flex-1 bg-[#f4f4f4] rounded-2xl  px-8 py-10 flex flex-col items-center">
+        <section className="flex-1 bg-[#f4f4f4] rounded-2xl px-6 md:px-8 py-10 flex flex-col items-center">
           {/* Logo */}
           <Image
             src="/assets/Logo.png" // Placeholder
@@ -66,8 +66,8 @@ export default function RiseEventsPanels() {
         </section>
 
         {/* Right Panel */}
-        <aside className="flex-1 bg-[#f4f4f4] rounded-2xl shadow-lg px-5 py-8 flex flex-col">
-          <h2 className="text-2xl font-bold text-gray-900 mb-5 text-center">
+        <aside className="flex-1 bg-[#f4f4f4] rounded-2xl shadow-lg px-6 md:px-8 py-8 flex flex-col">
+          <h2 className="text-xl md:text-2xl font-bold text-gray-900 mb-5 text-center">
             Event Calendar
           </h2>
           {/* Tab Navigation */}
