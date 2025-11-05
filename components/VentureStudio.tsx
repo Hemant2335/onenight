@@ -1,5 +1,6 @@
-// app/components/VentureStudio.tsx
+"use client";
 import Image from "next/image";
+import { motion } from "framer-motion";
 
 // Data for the service cards. This makes it easy to manage.
 const services = [
@@ -25,17 +26,21 @@ const tabs = ["Fintech", "Energy", "Space", "Entertainment", "Healthcare"];
 
 export default function VentureStudio() {
   return (
-    <section className="bg-gray-50/50 pt-16 lg:px-8">
+    <motion.section
+      initial={{ opacity: 0, y: 50 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+      className="bg-gray-50/50 pt-16 lg:px-8">
       {/* Main container with a subtle background */}
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-stretch">
         {/* === Left Column === */}
-        <div className="flex flex-col items-center bg-[#f4f4f4] p-2 lg:p-10 rounded-xl justify-between space-y-8 h-full">
+        <motion.div
+          initial={{ opacity: 0, x: -50 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+          className="flex flex-col items-center bg-[#f4f4f4] p-2 lg:p-10 rounded-xl justify-between space-y-8 h-full">
           {/* Logo */}
           <div className="w-48">
-            {/* IMPORTANT: 
-              Replace 'rise-logo.png' with your actual logo file.
-              Make sure 'rise-logo.png' is in the /public folder.
-            */}
             <Image
               src="/assets/Logo.png" // Placeholder
               alt="RISE Venture Studio Logo"
@@ -69,10 +74,14 @@ export default function VentureStudio() {
               movement starts here.
             </p>
           </div>
-        </div>
+        </motion.div>
 
         {/* === Right Column === */}
-        <div className="flex flex-col space-y-6 bg-[#f4f4f4] p-4 lg:p-10 rounded-lg h-full">
+        <motion.div
+          initial={{ opacity: 0, x: 50 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+          className="flex flex-col space-y-6 bg-[#f4f4f4] p-4 lg:p-10 rounded-lg h-full">
           {/* Category Tabs */}
           <div className="flex flex-wrap gap-x-4 gap-y-2">
             {tabs.map((tab) => (
@@ -90,10 +99,20 @@ export default function VentureStudio() {
           </div>
 
           {/* Service Cards */}
-          <div className="flex flex-col space-y-4 ">
+          <motion.div
+            initial="hidden"
+            animate="visible"
+            variants={{
+              visible: { transition: { staggerChildren: 0.2 } },
+            }}
+            className="flex flex-col space-y-4 ">
             {services.map((service) => (
-              <div
+              <motion.div
                 key={service.title}
+                variants={{
+                  hidden: { opacity: 0, y: 20 },
+                  visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
+                }}
                 className="bg-white border border-gray-200 rounded-lg p-6 transition-shadow hover:shadow-lg"
               >
                 <h3 className="text-lg font-semibold text-gray-900">
@@ -105,16 +124,16 @@ export default function VentureStudio() {
                     {service.details}
                   </p>
                 )}
-              </div>
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
 
           {/* Contact Button */}
           <button className="w-full bg-gray-800 text-white font-bold py-4 px-6 rounded-lg text-lg hover:bg-gray-900 transition-colors">
             CONTACT US
           </button>
-        </div>
+        </motion.div>
       </div>
-    </section>
+    </motion.section>
   );
 }

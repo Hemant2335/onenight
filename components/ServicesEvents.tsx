@@ -1,12 +1,22 @@
+"use client";
 import Image from "next/image";
+import { motion } from "framer-motion";
 
-export default function RiseEventsPanels() {
+export default function ServicesEvents() {
   return (
-    <div className="min-h-screen py-16   flex justify-center items-start">
+    <motion.div
+      initial={{ opacity: 0, y: 50 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+      className="min-h-screen py-16   flex justify-center items-start">
       {/* Main container holding both panels */}
       <div className="w-full max-w-5xl flex flex-col md:flex-row gap-12">
         {/* Left Panel */}
-        <section className="flex-1 bg-[#f4f4f4] rounded-2xl  px-8 py-10 flex flex-col items-center">
+        <motion.section
+          initial={{ opacity: 0, x: -50 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+          className="flex-1 bg-[#f4f4f4] rounded-2xl  px-8 py-10 flex flex-col items-center">
           {/* Logo */}
           <Image
             src="/assets/Logo.png" // Placeholder
@@ -23,9 +33,15 @@ export default function RiseEventsPanels() {
             entertainment
           </p>
           {/* Cards */}
-          <div className="w-full flex flex-col gap-6">
+          <motion.div
+            initial="hidden"
+            animate="visible"
+            variants={{
+              visible: { transition: { staggerChildren: 0.2 } },
+            }}
+            className="w-full flex flex-col gap-6">
             {/* Summit Card */}
-            <div className="bg-gray-50 rounded-xl px-6 py-6">
+            <motion.div variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { duration: 0.5 } } }} className="bg-gray-50 rounded-xl px-6 py-6">
               <h4 className="font-semibold text-gray-800 mb-1">
                 RISE Summit / Forum (Professional)
               </h4>
@@ -36,9 +52,9 @@ export default function RiseEventsPanels() {
                 high-level experts and facilitate networking that drives global
                 partnerships and deal flow.
               </p>
-            </div>
+            </motion.div>
             {/* Academy Card */}
-            <div className="bg-gray-50 rounded-xl px-6 py-6">
+            <motion.div variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { duration: 0.5 } } }} className="bg-gray-50 rounded-xl px-6 py-6">
               <h4 className="font-semibold text-gray-800 mb-1">
                 RISE Academy (Education & Workshops)
               </h4>
@@ -48,9 +64,9 @@ export default function RiseEventsPanels() {
                 practical, intensive training for executives, investors, and
                 entrepreneurs.
               </p>
-            </div>
+            </motion.div>
             {/* Live Entertainment Card */}
-            <div className="bg-gray-50 rounded-xl px-6 py-6">
+            <motion.div variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { duration: 0.5 } } }} className="bg-gray-50 rounded-xl px-6 py-6">
               <h4 className="font-semibold text-gray-800 mb-1">
                 Live Entertainment & Production
               </h4>
@@ -61,12 +77,16 @@ export default function RiseEventsPanels() {
                 excellence to manage logistics, ticketing, and production,
                 reinforcing our footprint in the consumer and cultural economy.
               </p>
-            </div>
-          </div>
-        </section>
+            </motion.div>
+          </motion.div>
+        </motion.section>
 
         {/* Right Panel */}
-        <aside className="flex-1 bg-[#f4f4f4] rounded-2xl shadow-lg px-5 py-8 flex flex-col">
+        <motion.aside
+          initial={{ opacity: 0, x: 50 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+          className="flex-1 bg-[#f4f4f4] rounded-2xl shadow-lg px-5 py-8 flex flex-col">
           <h2 className="text-2xl font-bold text-gray-900 mb-5 text-center">
             Event Calendar
           </h2>
@@ -78,10 +98,20 @@ export default function RiseEventsPanels() {
             <span className="text-gray-400 px-2">Attending</span>
           </div>
           {/* Event Items */}
-          <div className="flex flex-col gap-3 bg-white mb-8">
+          <motion.div
+            initial="hidden"
+            animate="visible"
+            variants={{
+              visible: { transition: { staggerChildren: 0.1 } },
+            }}
+            className="flex flex-col gap-3 bg-white mb-8">
             {[...Array(5)].map((_, idx) => (
-              <div
+              <motion.div
                 key={idx}
+                variants={{
+                  hidden: { opacity: 0, y: 20 },
+                  visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
+                }}
                 className={`rounded-lg px-5 py-3 ${
                   idx === 1 ? "bg-gray-100 border-l-4 border-teal-500" : ""
                 }`}
@@ -104,9 +134,9 @@ export default function RiseEventsPanels() {
                     Register/Tickets Link
                   </a>
                 </div>
-              </div>
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
           {/* Feed Highlights */}
           <div className="mt-auto border-t pt-4">
             <h4 className="font-semibold text-gray-700 mb-2 text-sm">
@@ -132,8 +162,8 @@ export default function RiseEventsPanels() {
               </li>
             </ul>
           </div>
-        </aside>
+        </motion.aside>
       </div>
-    </div>
+    </motion.div>
   );
 }
