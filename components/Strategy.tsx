@@ -3,9 +3,9 @@ import { Presentation, Landmark } from 'lucide-react' // Icons
 
 export default function Strategy() {
   return (
-    <section className="grid grid-cols-1 md:grid-cols-2 gap-12 max-w-6xl mx-auto">
+    <section className="grid grid-cols-1 md:grid-cols-2 gap-12 max-w-6xl mx-auto px-4">
       {/* Left Panel - Light Gray Background */}
-      <div className="bg-gray-100 rounded-xl p-10 flex flex-col items-center text-center">
+      <div className="bg-gray-100 rounded-xl p-6 md:p-10 flex flex-col items-center text-center">
         {/* Logo */}
         <Image 
           src="/assets/Logo.png" 
@@ -17,12 +17,12 @@ export default function Strategy() {
         
         {/* Main Headings with Dotted Separators */}
         <div className="w-full mb-8 ">
-          <h2 className="text-2xl font-normal text-gray-500 mb-3">
+          <h2 className="text-xl md:text-2xl font-normal text-gray-500 mb-3">
             Financing Imagination
           </h2>
           <div className="border-b-2 border-dotted border-gray-400 mb-6"></div>
           
-          <h3 className="text-2xl font-normal text-gray-500 mb-3">
+          <h3 className="text-xl md:text-2xl font-normal text-gray-500 mb-3">
             Producing Culture
           </h3>
           <div className="border-b-2 border-dotted border-gray-400 mb-6"></div>
@@ -60,10 +60,10 @@ export default function Strategy() {
       </div>
 
       {/* Right Panel - White Background */}
-      <div className="bg-[#f4f4f4] rounded-xl p-10 flex flex-col">
+      <div className="bg-[#f4f4f4] rounded-xl p-6 md:p-10 flex flex-col">
         {/* Strategic Model Section */}
         <div className="mb-10">
-          <h3 className="text-xl font-semibold text-gray-600 mb-6 text-center">
+          <h3 className="text-lg md:text-xl font-semibold text-gray-600 mb-6 text-center">
             Our Strategic Model
           </h3>
           
@@ -79,7 +79,7 @@ export default function Strategy() {
 
         {/* Financial Focus Section */}
         <div className="mb-auto">
-          <h3 className="text-xl font-semibold text-gray-600 mb-6 text-center">
+          <h3 className="text-lg md:text-xl font-semibold text-gray-600 mb-6 text-center">
             Financial Focus
           </h3>
           

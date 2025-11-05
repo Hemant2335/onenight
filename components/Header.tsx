@@ -12,23 +12,26 @@ const Header = () => {
         className="w-full h-full object-cover -z-10" 
       />
 
-      <div className="absolute inset-0 flex flex-col justify-center items-center text-center p-4">
-        
-
-        <div className="mt-[25vw]"></div>
+      {/* Overlay Content */}
+      <div className="absolute inset-0 flex flex-col justify-end items-center text-center p-4 pb-32">
         {/* Festival Info Text */}
-        {/* Using a fragment and simple spans, centered by the parent */}
-        <div className="flex flex-col items-center font-light tracking-wider space-y-1 ">
-          <span className="text-base text-yellow-100 font-normal">MUSICAL CULTURAL FESTIVAL</span>
-          <span className="text-sm md:text-base mt-1 text-yellow-100 font-normal">ARTIST REVEAL</span>
-          {/* Corrected to 14TH NOV */}
-          <span className="text-sm md:text-base text-yellow-100 font-normal">ON 14TH NOV</span>
-          {/* Added missing "DUBAI ISLANDS" text */}
-          <span className="text-sm md:text-base mt-3 text-gray-400 font-normal">DUBAI ISLANDS</span>
+        <div className="flex flex-col items-center font-light tracking-wider space-y-2">
+          <span className="text-lg md:text-xl text-yellow-100 font-normal">
+            MUSICAL CULTURAL FESTIVAL
+          </span>
+          <span className="text-md md:text-lg mt-1 text-yellow-100 font-normal">
+            ARTIST REVEAL
+          </span>
+          <span className="text-md md:text-lg text-yellow-100 font-normal">
+            ON 14TH NOV
+          </span>
+          <span className="text-md md:text-lg mt-3 text-gray-400 font-normal">
+            DUBAI ISLANDS
+          </span>
         </div>
 
         {/* Find Out More Button */}
-        <button className="border border-white/70 text-white px-8 py-2 mt-8 rounded-sm text-xs md:text-sm tracking-widest hover:bg-white/10 transition-colors duration-300">
+        <button className="border border-white/70 text-white px-10 py-3 mt-8 rounded-sm text-sm md:text-base tracking-widest hover:bg-white/10 transition-colors duration-300">
           FIND OUT MORE
         </button>
       </div>

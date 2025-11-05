@@ -3,7 +3,7 @@ import { Facebook, Twitter, Instagram, Linkedin } from 'lucide-react'
 export default function Footer() {
   return (
     <footer className="w-full bg-gray-900 text-gray-400 mt-16 py-12">
-      <div className="max-w-6xl mx-auto px-8 text-center">
+      <div className="max-w-6xl mx-auto px-4 sm:px-8 text-center">
         <div className="flex justify-center gap-6 mb-6">
           <a href="#" className="hover:text-white"><Facebook size={24} /></a>
           <a href="#" className="hover:text-white"><Twitter size={24} /></a>

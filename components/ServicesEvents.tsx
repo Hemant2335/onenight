@@ -2,11 +2,11 @@ import Image from 'next/image'
 
 export default function RiseEventsPanels() {
   return (
-    <div className="min-h-screen py-16   flex justify-center items-start">
+    <div className="py-16 flex justify-center items-start">
       {/* Main container holding both panels */}
-      <div className="w-full max-w-5xl flex flex-col md:flex-row gap-12">
+      <div className="w-full max-w-5xl flex flex-col md:flex-row gap-12 px-4">
         {/* Left Panel */}
-        <section className="flex-1 bg-[#f4f4f4] rounded-2xl  px-8 py-10 flex flex-col items-center">
+        <section className="flex-1 bg-[#f4f4f4] rounded-2xl px-6 md:px-8 py-10 flex flex-col items-center">
           {/* Logo */}
           <Image src="/assets/Logo.png" width={100} height={40} alt="RISE Logo" className="mb-6" />
           {/* Description */}
@@ -40,8 +40,8 @@ export default function RiseEventsPanels() {
         </section>
 
         {/* Right Panel */}
-        <aside className="flex-1 bg-[#f4f4f4] rounded-2xl shadow-lg px-5 py-8 flex flex-col">
-          <h2 className="text-2xl font-bold text-gray-900 mb-5 text-center">Event Calendar</h2>
+        <aside className="flex-1 bg-[#f4f4f4] rounded-2xl shadow-lg px-6 md:px-8 py-8 flex flex-col">
+          <h2 className="text-xl md:text-2xl font-bold text-gray-900 mb-5 text-center">Event Calendar</h2>
           {/* Tab Navigation */}
           <div className="flex gap-3  rounded-xl px-3 py-2 mb-7">
             <span className="border-b-2 border-gray-400 font-semibold px-2">Upcoming</span>
