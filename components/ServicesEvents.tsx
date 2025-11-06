@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
 
 const upcomingEvents = [
@@ -88,7 +88,7 @@ export default function ServicesEvents() {
   const currentEvents =
     activeTab === "upcoming" ? upcomingEvents : attendingEvents;
 
-  const getStatusColor = (status : string) => {
+  const getStatusColor = (status: string) => {
     switch (status) {
       case "Booking Open":
         return "text-teal-600";
@@ -255,59 +255,57 @@ export default function ServicesEvents() {
             </motion.button>
           </div>
           {/* Event Items */}
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            variants={{
-              hidden: { opacity: 0 },
-              visible: {
-                opacity: 1,
-                transition: { staggerChildren: 0.1 },
-              },
-            }}
-            className="flex flex-col gap-3 bg-white mb-8 rounded-lg p-2 lg:p-4">
-            {currentEvents.map((event) => (
+          <div className="flex flex-col gap-3 bg-white mb-8 rounded-lg p-2 lg:p-4">
+            <AnimatePresence mode="wait">
               <motion.div
-                key={event.id}
-                variants={{
-                  hidden: { opacity: 0, y: 20 },
-                  visible: { opacity: 1, y: 0, transition: { duration: 0.3 } },
-                }}
-                onClick={() => setSelectedEventId(event.id)}
-                whileHover={{ y: -4, boxShadow: "0 8px 16px rgba(0, 0, 0, 0.1)" }}
-                className={`rounded-lg px-2 lg:px-5 py-4 cursor-pointer transition-all ${
-                  selectedEventId === event.id
-                    ? "bg-teal-50 border-l-4 border-teal-500 shadow-md"
-                    : "bg-gray-50 border-l-4 border-transparent hover:bg-gray-100"
-                }`}>
-                <div className="text-xs text-gray-400 mb-1">{event.date}</div>
-                <div className="font-semibold text-gray-800 mb-1">
-                  {event.title}
-                </div>
-                <div className="text-xs text-gray-500 mb-3">
-                  📍 {event.location}
-                </div>
-                <div className="flex gap-4 items-center">
-                  <span
-                    className={`font-semibold text-xs ${getStatusColor(
-                      event.status
-                    )}`}>
-                    {event.status}
-                  </span>
-                  <motion.a
-                    href={event.link}
-                    className="text-blue-600 text-xs font-medium underline hover:text-blue-700"
-                    whileHover={{ x: 2 }}
-                    whileTap={{ scale: 0.98 }}>
-                    {activeTab === "upcoming"
-                      ? "Register/Tickets →"
-                      : "View Details →"}
-                  </motion.a>
-                </div>
+                key={activeTab}
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: 20 }}
+                transition={{ duration: 0.3 }}
+                className="flex flex-col gap-3">
+                {currentEvents.map((event, index) => (
+                  <motion.div
+                    key={event.id}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.3, delay: index * 0.1 }}
+                    onClick={() => setSelectedEventId(event.id)}
+                    whileHover={{ y: -4, boxShadow: "0 8px 16px rgba(0, 0, 0, 0.1)" }}
+                    className={`rounded-lg px-2 lg:px-5 py-4 cursor-pointer transition-all ${
+                      selectedEventId === event.id
+                        ? "bg-teal-50 border-l-4 border-teal-500 shadow-md"
+                        : "bg-gray-50 border-l-4 border-transparent hover:bg-gray-100"
+                    }`}>
+                    <div className="text-xs text-gray-400 mb-1">{event.date}</div>
+                    <div className="font-semibold text-gray-800 mb-1">
+                      {event.title}
+                    </div>
+                    <div className="text-xs text-gray-500 mb-3">
+                      📍 {event.location}
+                    </div>
+                    <div className="flex gap-4 items-center">
+                      <span
+                        className={`font-semibold text-xs ${getStatusColor(
+                          event.status
+                        )}`}>
+                        {event.status}
+                      </span>
+                      <motion.a
+                        href={event.link}
+                        className="text-blue-600 text-xs font-medium underline hover:text-blue-700"
+                        whileHover={{ x: 2 }}
+                        whileTap={{ scale: 0.98 }}>
+                        {activeTab === "upcoming"
+                          ? "Register/Tickets →"
+                          : "View Details →"}
+                      </motion.a>
+                    </div>
+                  </motion.div>
+                ))}
               </motion.div>
-            ))}
-          </motion.div>
+            </AnimatePresence>
+          </div>
           {/* Feed Highlights */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
