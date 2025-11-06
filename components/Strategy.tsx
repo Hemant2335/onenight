@@ -7,13 +7,15 @@ export default function Strategy() {
   return (
     <motion.section
       initial={{ opacity: 0, y: 50 }}
-      animate={{ opacity: 1, y: 0 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
       transition={{ duration: 0.5 }}
       className="grid grid-cols-1 md:grid-cols-2 gap-12 max-w-6xl mx-auto px-4">
       {/* Left Panel - Light Gray Background */}
       <motion.div
         initial={{ opacity: 0, x: -50 }}
-        animate={{ opacity: 1, x: 0 }}
+        whileInView={{ opacity: 1, x: 0 }}
+        viewport={{ once: true }}
         transition={{ duration: 0.5, delay: 0.2 }}
         className="bg-gray-100 rounded-xl p-6 md:p-10 flex flex-col items-center text-center">
         {/* Logo */}
@@ -48,7 +50,8 @@ export default function Strategy() {
         {/* Production Categories */}
         <motion.div
           initial="hidden"
-          animate="visible"
+          whileInView="visible"
+          viewport={{ once: true }}
           variants={{
             visible: { transition: { staggerChildren: 0.2 } },
           }}
@@ -78,13 +81,15 @@ export default function Strategy() {
       {/* Right Panel - White Background */}
       <motion.div
         initial={{ opacity: 0, x: 50 }}
-        animate={{ opacity: 1, x: 0 }}
+        whileInView={{ opacity: 1, x: 0 }}
+        viewport={{ once: true }}
         transition={{ duration: 0.5, delay: 0.2 }}
         className="bg-[#f4f4f4] rounded-xl p-6 md:p-10 flex flex-col">
         {/* Strategic Model Section */}
         <motion.div
           initial={{ opacity: 0, y: 50 }}
-          animate={{ opacity: 1, y: 0 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.4 }}
           className="mb-10">
           <h3 className="text-lg md:text-xl font-semibold text-gray-600 mb-6 text-center">
@@ -104,7 +109,8 @@ export default function Strategy() {
         {/* Financial Focus Section */}
         <motion.div
           initial={{ opacity: 0, y: 50 }}
-          animate={{ opacity: 1, y: 0 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.6 }}
           className="mb-auto">
           <h3 className="text-lg md:text-xl font-semibold text-gray-600 mb-6 text-center">
