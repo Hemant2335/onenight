@@ -115,7 +115,7 @@ export default function VentureStudio() {
           className="flex flex-col items-center bg-[#f4f4f4] p-6 md:p-2 lg:p-10 rounded-xl justify-between space-y-8 h-full">
           {/* Logo */}
          <Image 
-                   src="/assets/Logo.png" 
+                   src="/assets/RISE_DXB_Invest_Dark.png" 
                    alt="RISE Studio Logo" 
                    width={200} 
                    height={80} 

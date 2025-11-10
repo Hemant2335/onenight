@@ -8,8 +8,6 @@ export default function Home() {
   return (
     <main className="flex min-h-screen overflow-hidden flex-col items-center">
       <Header />
-      
-      {/* Main Content Area */}
       <div className="w-full max-w-6xl mx-auto p-4 sm:p-8 space-y-8">
         <VentureStudio />
         <ServicesEvents />

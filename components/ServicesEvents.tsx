@@ -123,7 +123,7 @@ export default function ServicesEvents() {
           className="flex-1 bg-[#f4f4f4] rounded-2xl px-6 md:px-8 py-10 flex flex-col items-center">
           {/* Logo */}
           <Image
-            src="/assets/Logo.png"
+            src="/assets/RISE_DXB_Events_Dark.png"
             alt="RISE Venture Studio Logo"
             width={200}
             height={70}

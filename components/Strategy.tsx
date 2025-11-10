@@ -20,7 +20,7 @@ export default function Strategy() {
         className="bg-gray-100 rounded-xl p-6 md:p-10 flex flex-col items-center text-center">
         {/* Logo */}
         <Image 
-          src="/assets/Logo.png" 
+          src="/assets/RISE_DXB_Studio_Dark.png" 
           alt="RISE Studio Logo" 
           width={200} 
           height={80} 

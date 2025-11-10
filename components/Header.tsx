@@ -2,7 +2,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, Home, Calendar, Users, Info, Mail, Ticket } from "lucide-react";
+import { X, Home, Calendar, Users, Info, Mail , Gift} from "lucide-react";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -12,12 +12,12 @@ const Header = () => {
   };
 
   const menuItems = [
-    { icon: Home, label: "Home", href: "#home" },
-    { icon: Calendar, label: "Events", href: "#events" },
-    { icon: Users, label: "Artists", href: "#artists" },
-    { icon: Ticket, label: "Tickets", href: "#tickets" },
-    { icon: Info, label: "About", href: "#about" },
-    { icon: Mail, label: "Contact", href: "#contact" },
+    { icon: Home, label: "Home", href: "/" },
+    { icon: Users, label: "Invest", href: "/invest" },
+    { icon: Calendar, label: "Events", href: "/events" },
+    { icon: Info, label: "Studio", href: "/studio" },
+    { icon: Gift, label: "Rewards", href: "/rewards" },
+    { icon: Mail, label: "Contact", href: "/contact" },
   ];
 
   return (
@@ -78,30 +78,30 @@ const Header = () => {
         </motion.button>
       </motion.div>
 
-      {/* Hamburger Menu Button */}
+      {/* Hamburger Menu Button - MOVED TO LEFT BOTTOM */}
       <motion.button
-        initial={{ opacity: 0, x: 50 }}
+        initial={{ opacity: 0, x: -50 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.5 }}
         onClick={toggleMenu}
         aria-label={isMenuOpen ? "Close menu" : "Open menu"}
         aria-expanded={isMenuOpen}
-        className="absolute top-4 right-8 sm:top-6 sm:right-6 md:top-8 md:right-8 w-12 h-12 sm:w-14 sm:h-14 bg-white/90 backdrop-blur-sm rounded-full flex flex-col items-center justify-center space-y-1.5 p-2 transition-all duration-300 hover:bg-white hover:scale-110 active:scale-95 shadow-lg z-50"
+        className="absolute bottom-4 left-8 sm:bottom-6 sm:left-6 md:bottom-8 md:left-8 w-12 h-12 sm:w-14 sm:h-14 bg-blue-500 backdrop-blur-sm rounded-full flex flex-col items-center justify-center space-y-1.5 p-2 transition-all duration-300 hover:bg-white hover:scale-110 active:scale-95 shadow-lg z-50"
       >
         <motion.span 
           animate={isMenuOpen ? { rotate: 45, y: 6 } : { rotate: 0, y: 0 }}
           transition={{ duration: 0.3 }}
-          className="w-6 h-0.5 bg-[#111111] block"
+          className="w-6 h-0.5 bg-white block"
         ></motion.span>
         <motion.span 
           animate={isMenuOpen ? { opacity: 0 } : { opacity: 1 }}
           transition={{ duration: 0.3 }}
-          className="w-6 h-0.5 bg-[#111111] block"
+          className="w-6 h-0.5 bg-white block"
         ></motion.span>
         <motion.span 
           animate={isMenuOpen ? { rotate: -45, y: -6 } : { rotate: 0, y: 0 }}
           transition={{ duration: 0.3 }}
-          className="w-6 h-0.5 bg-[#111111] block"
+          className="w-6 h-0.5 bg-white block"
         ></motion.span>
       </motion.button>
 
@@ -141,7 +141,7 @@ const Header = () => {
               </button>
             </div>
 
-            {/* Menu Items - IMPROVED */}
+            {/* Menu Items - UPDATED CONTENT */}
             <nav className="p-6 space-y-1">
               {menuItems.map((item, index) => {
                 const Icon = item.icon;
@@ -164,7 +164,6 @@ const Header = () => {
               })}
             </nav>
 
-            {/* Menu Footer - IMPROVED */}
             <div className="absolute bottom-0 left-0 right-0 p-6 border-t border-white/10">
               <div className="text-center space-y-4">
                 <p className="text-xs text-white/50 tracking-widest">FOLLOW US</p>
