@@ -1,4 +1,3 @@
-// components/GlobalMenu.tsx
 "use client";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, Home, Calendar, Users, Info, Mail, Gift } from "lucide-react";
@@ -58,37 +57,47 @@ const GlobalMenu = () => {
             <nav className="p-6 space-y-1">
               {menuItems.map((item, index) => {
                 const Icon = item.icon;
-                const isFunctional = item.label === "Home" || item.label === "Invest";
-                const isHighlighted = item.label === "Invest";
+                const isInvest = item.label === "Invest";
 
                 return (
                   <motion.a
                     key={item.label}
-                    href={isFunctional ? item.href : undefined}
+                    href={item.href}
+                    onClick={closeMenu}
                     initial={{ opacity: 0, x: -20 }}
                     animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: index * 0.08 }}
-                    onClick={isFunctional ? closeMenu : undefined}
-                    aria-disabled={!isFunctional}
-                    tabIndex={isFunctional ? 0 : -1}
-                    className={`flex items-center space-x-3 px-4 py-3 rounded-lg transition-all duration-200 group ${
-                      isFunctional
-                        ? "hover:bg-white/5 cursor-pointer"
-                        : "text-gray-400 cursor-not-allowed opacity-60 pointer-events-none"
-                    } ${isHighlighted ? "border-l-2 border-blue-500 pl-3" : ""}`}
+                    transition={{ delay: index * 0.06 }}
+                    // No hover background — show a boundary on hover instead
+                    className={`flex items-center space-x-3 px-4 py-3 rounded-lg transition-all duration-200 group focus:outline-none
+                      ${
+                        isInvest
+                          ? "bg-gradient-to-r from-white/3 via-white/6 to-white/3 ring-2 ring-indigo-500/30 shadow-[0_8px_24px_rgba(99,102,241,0.12)]"
+                          : "cursor-pointer"
+                      }
+                    `}
+                    // Add accessible focus and hover boundary for all items
+                    onMouseEnter={(e) => {
+                      // add boundary effect via classList to avoid hover background
+                      if (!isInvest) e.currentTarget.classList.add("ring-2", "ring-white/10");
+                    }}
+                    onMouseLeave={(e) => {
+                      if (!isInvest) e.currentTarget.classList.remove("ring-2", "ring-white/10");
+                    }}
+                    onFocus={(e) => {
+                      if (!isInvest) e.currentTarget.classList.add("ring-2", "ring-white/10");
+                    }}
+                    onBlur={(e) => {
+                      if (!isInvest) e.currentTarget.classList.remove("ring-2", "ring-white/10");
+                    }}
                   >
                     <Icon
                       className={`w-5 h-5 transition-colors duration-200 ${
-                        isFunctional ? "text-white/80 group-hover:text-white" : "text-white/40"
+                        isInvest ? "text-white" : "text-white/80"
                       }`}
                     />
                     <span
                       className={`text-sm font-medium transition-colors duration-200 ${
-                        isHighlighted
-                          ? "text-white"
-                          : isFunctional
-                          ? "text-white/80 group-hover:text-white"
-                          : "text-white/40"
+                        isInvest ? "text-white" : "text-white/80"
                       }`}
                     >
                       {item.label}
