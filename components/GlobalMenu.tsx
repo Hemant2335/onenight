@@ -58,18 +58,39 @@ const GlobalMenu = () => {
             <nav className="p-6 space-y-1">
               {menuItems.map((item, index) => {
                 const Icon = item.icon;
+                const isFunctional = item.label === "Home" || item.label === "Invest";
+                const isHighlighted = item.label === "Invest";
+
                 return (
                   <motion.a
                     key={item.label}
-                    href={item.href}
+                    href={isFunctional ? item.href : undefined}
                     initial={{ opacity: 0, x: -20 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: index * 0.08 }}
-                    onClick={closeMenu}
-                    className="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-white/5 transition-all duration-200 group cursor-pointer"
+                    onClick={isFunctional ? closeMenu : undefined}
+                    aria-disabled={!isFunctional}
+                    tabIndex={isFunctional ? 0 : -1}
+                    className={`flex items-center space-x-3 px-4 py-3 rounded-lg transition-all duration-200 group ${
+                      isFunctional
+                        ? "hover:bg-white/5 cursor-pointer"
+                        : "text-gray-400 cursor-not-allowed opacity-60 pointer-events-none"
+                    } ${isHighlighted ? "border-l-2 border-blue-500 pl-3" : ""}`}
                   >
-                    <Icon className="w-5 h-5 text-white/60 group-hover:text-white transition-colors duration-200" />
-                    <span className="text-sm font-medium text-white/80 group-hover:text-white transition-colors duration-200">
+                    <Icon
+                      className={`w-5 h-5 transition-colors duration-200 ${
+                        isFunctional ? "text-white/80 group-hover:text-white" : "text-white/40"
+                      }`}
+                    />
+                    <span
+                      className={`text-sm font-medium transition-colors duration-200 ${
+                        isHighlighted
+                          ? "text-white"
+                          : isFunctional
+                          ? "text-white/80 group-hover:text-white"
+                          : "text-white/40"
+                      }`}
+                    >
                       {item.label}
                     </span>
                   </motion.a>
@@ -81,13 +102,22 @@ const GlobalMenu = () => {
               <div className="text-center space-y-4">
                 <p className="text-xs text-white/50 tracking-widest">FOLLOW US</p>
                 <div className="flex justify-center space-x-3">
-                  <a href="#" className="w-10 h-10 rounded-full hover:bg-white/10 flex items-center justify-center transition-all duration-200 group">
+                  <a
+                    href="#"
+                    className="w-10 h-10 rounded-full hover:bg-white/10 flex items-center justify-center transition-all duration-200 group"
+                  >
                     <span className="text-white/60 text-xs font-medium group-hover:text-white">f</span>
                   </a>
-                  <a href="#" className="w-10 h-10 rounded-full hover:bg-white/10 flex items-center justify-center transition-all duration-200 group">
+                  <a
+                    href="#"
+                    className="w-10 h-10 rounded-full hover:bg-white/10 flex items-center justify-center transition-all duration-200 group"
+                  >
                     <span className="text-white/60 text-xs font-medium group-hover:text-white">in</span>
                   </a>
-                  <a href="#" className="w-10 h-10 rounded-full hover:bg-white/10 flex items-center justify-center transition-all duration-200 group">
+                  <a
+                    href="#"
+                    className="w-10 h-10 rounded-full hover:bg-white/10 flex items-center justify-center transition-all duration-200 group"
+                  >
                     <span className="text-white/60 text-xs font-medium group-hover:text-white">tw</span>
                   </a>
                 </div>
