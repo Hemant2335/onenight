@@ -1,8 +1,8 @@
-import Header from '@/components/Header'
-import VentureStudio from '@/components/VentureStudio'
-import ServicesEvents from '@/components/ServicesEvents'
-import Strategy from '@/components/Strategy'
-import Footer from '@/components/Footer'
+import Header from "@/components/Header";
+import VentureStudio from "@/components/VentureStudio";
+import ServicesEvents from "@/components/ServicesEvents";
+import Strategy from "@/components/Strategy";
+import Footer from "@/components/Footer";
 
 export default function Home() {
   return (
@@ -16,5 +16,5 @@ export default function Home() {
 
       <Footer />
     </main>
-  )
+  );
 }
