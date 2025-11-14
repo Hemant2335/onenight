@@ -1,6 +1,6 @@
 "use client";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, Home, Calendar, Users, Info, Mail, Gift } from "lucide-react";
+import { X, Home, Calendar, DollarSign, Film, Mail, Gift } from "lucide-react";
 import { useMenu } from "../contexts/MenuContext";
 import Image from "next/image";
 
@@ -9,9 +9,9 @@ const GlobalMenu = () => {
 
   const menuItems = [
     { icon: Home, label: "Home", href: "/" },
-    { logo: "/assets/RISE_DXB_Invest_Dark.png", label: "Invest", href: "#invest" },
-    { logo: "/assets/RISE_DXB_Events_Dark.png", label: "Events", href: "#events" },
-    { logo: "/assets/RISE_DXB_Studio_Dark.png", label: "Studio", href: "#studio" },
+    { icon: DollarSign, label: "Invest", href: "#invest" },
+    { icon: Calendar, label: "Events", href: "#events" },
+    { icon: Film, label: "Studio", href: "#studio" },
     { icon: Gift, label: "Rewards", href: "/rewards" },
     { icon: Mail, label: "Contact", href: "/contact" },
   ];
@@ -91,21 +91,13 @@ const GlobalMenu = () => {
                       if (!isInvest) e.currentTarget.classList.remove("ring-2", "ring-white/10");
                     }}
                   >
-                    {item.logo ? (
-                      <Image
-                        src={item.logo}
-                        alt={`${item.label} logo`}
-                        width={20}
-                        height={20}
-                        className="transition-opacity duration-200"
-                      />
-                    ) : Icon ? (
+                    {Icon && (
                       <Icon
                         className={`w-5 h-5 transition-colors duration-200 ${
                           isInvest ? "text-white" : "text-white/80"
                         }`}
                       />
-                    ) : null}
+                    )}
                     <span
                       className={`text-sm font-medium transition-colors duration-200 ${
                         isInvest ? "text-white" : "text-white/80"

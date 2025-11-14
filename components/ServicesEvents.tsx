@@ -1,92 +1,65 @@
 "use client";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { eventsAPI } from "@/lib/api";
 
-const upcomingEvents = [
-  {
-    id: 1,
-    date: "Friday, Nov 14",
-    title: "The Global Fintech Summit 2025",
-    location: "The Metropolitan Center",
-    status: "Booking Open",
-    link: "/register",
-  },
-  {
-    id: 2,
-    date: "Saturday, Nov 22",
-    title: "Web3 Innovation Conference",
-    location: "Digital Hub Dubai",
-    status: "Booking Open",
-    link: "/register",
-  },
-  {
-    id: 3,
-    date: "Tuesday, Dec 3",
-    title: "Sustainable Energy Forum",
-    location: "Green Tech Valley",
-    status: "Coming Soon",
-    link: "/register",
-  },
-  {
-    id: 4,
-    date: "Thursday, Dec 12",
-    title: "Space Technology Expo",
-    location: "Innovation Park",
-    status: "Booking Open",
-    link: "/register",
-  },
-  {
-    id: 5,
-    date: "Friday, Dec 20",
-    title: "Private Equity Trends 2025",
-    location: "Financial District",
-    status: "Limited Spots",
-    link: "/register",
-  },
-  {
-    id: 6,
-    date: "Saturday, Jan 10",
-    title: "RISE Academy: AI Masterclass",
-    location: "Tech Campus",
-    status: "Booking Open",
-    link: "/register",
-  },
-];
-
-const attendingEvents = [
-  {
-    id: 7,
-    date: "Thursday, Nov 6",
-    title: "AI for Business Leaders",
-    location: "Downtown Conference Hall",
-    status: "In Progress",
-    link: "/view-details",
-  },
-  {
-    id: 8,
-    date: "Wednesday, Nov 12",
-    title: "Advanced DevOps Workshop",
-    location: "Tech Center",
-    status: "Confirmed",
-    link: "/view-details",
-  },
-  {
-    id: 9,
-    date: "Friday, Nov 15",
-    title: "Blockchain Deep Dive",
-    location: "Innovation Hub",
-    status: "Confirmed",
-    link: "/view-details",
-  },
-];
+interface Event {
+  id: string;
+  name: string;
+  description?: string;
+  created_at: string;
+  status: string;
+  available_tickets: number;
+  total_tickets: number;
+  booked_tickets: number;
+}
 
 export default function ServicesEvents() {
+  const [events, setEvents] = useState<Event[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
   const [activeTab, setActiveTab] = useState("upcoming");
-  const [selectedEventId, setSelectedEventId] = useState(1);
+  const [selectedEventId, setSelectedEventId] = useState<string>("");
 
-  const currentEvents =
-    activeTab === "upcoming" ? upcomingEvents : attendingEvents;
+  useEffect(() => {
+    fetchEvents();
+  }, []);
+
+  const fetchEvents = async () => {
+    try {
+      setLoading(true);
+      setError("");
+      const response = await eventsAPI.getAllPublicEvents();
+      setEvents(response.events || []);
+      if (response.events && response.events.length > 0) {
+        setSelectedEventId(response.events[0].id);
+      }
+    } catch (err: any) {
+      setError(err.message || "Failed to fetch events");
+      console.error("Error fetching events:", err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const formatEventDate = (dateString: string) => {
+    const date = new Date(dateString);
+    const months = [
+      "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+      "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+    ];
+    return `${months[date.getMonth()]} ${date.getDate()}, ${date.getFullYear()}`;
+  };
+
+  // Filter events based on tab
+  const currentEvents = events.filter((event) => {
+    if (activeTab === "upcoming") {
+      return event.available_tickets > 0;
+    }
+    // For "attending" tab, show all events (since public API doesn't have attending info)
+    return true;
+  });
 
   const getStatusColor = (status: string) => {
     switch (status) {
@@ -228,7 +201,10 @@ export default function ServicesEvents() {
             <motion.button
               onClick={() => {
                 setActiveTab("upcoming");
-                setSelectedEventId(upcomingEvents[0].id);
+                const upcoming = events.filter(e => e.available_tickets > 0);
+                if (upcoming.length > 0) {
+                  setSelectedEventId(upcoming[0].id);
+                }
               }}
               className={`px-4 py-2 font-semibold transition-all ${
                 activeTab === "upcoming"
@@ -239,10 +215,12 @@ export default function ServicesEvents() {
               whileTap={{ scale: 0.98 }}>
               Upcoming
             </motion.button>
-            <motion.button
+            {/* <motion.button
               onClick={() => {
                 setActiveTab("attending");
-                setSelectedEventId(attendingEvents[0].id);
+                if (events.length > 0) {
+                  setSelectedEventId(events[0].id);
+                }
               }}
               className={`px-4 py-2 font-semibold transition-all ${
                 activeTab === "attending"
@@ -251,60 +229,87 @@ export default function ServicesEvents() {
               }`}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.98 }}>
-              Attending
-            </motion.button>
+              All Events
+            </motion.button> */}
           </div>
           {/* Event Items */}
           <div className="flex flex-col gap-3 bg-white mb-8 rounded-lg p-2 lg:p-4">
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={activeTab}
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: 20 }}
-                transition={{ duration: 0.3 }}
-                className="flex flex-col gap-3">
-                {currentEvents.map((event, index) => (
-                  <motion.div
-                    key={event.id}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.3, delay: index * 0.1 }}
-                    onClick={() => setSelectedEventId(event.id)}
-                    whileHover={{ y: -4, boxShadow: "0 8px 16px rgba(0, 0, 0, 0.1)" }}
-                    className={`rounded-lg px-2 lg:px-5 py-4 cursor-pointer transition-all ${
-                      selectedEventId === event.id
-                        ? "bg-teal-50 border-l-4 border-teal-500 shadow-md"
-                        : "bg-gray-50 border-l-4 border-transparent hover:bg-gray-100"
-                    }`}>
-                    <div className="text-xs text-gray-400 mb-1">{event.date}</div>
-                    <div className="font-semibold text-gray-800 mb-1">
-                      {event.title}
-                    </div>
-                    <div className="text-xs text-gray-500 mb-3">
-                      📍 {event.location}
-                    </div>
-                    <div className="flex gap-4 items-center">
-                      <span
-                        className={`font-semibold text-xs ${getStatusColor(
-                          event.status
-                        )}`}>
-                        {event.status}
-                      </span>
-                      <motion.a
-                        href={event.link}
-                        className="text-blue-600 text-xs font-medium underline hover:text-blue-700"
-                        whileHover={{ x: 2 }}
-                        whileTap={{ scale: 0.98 }}>
-                        {activeTab === "upcoming"
-                          ? "Register/Tickets →"
-                          : "View Details →"}
-                      </motion.a>
-                    </div>
-                  </motion.div>
-                ))}
-              </motion.div>
-            </AnimatePresence>
+            {loading ? (
+              <div className="text-center py-8">
+                <div className="text-4xl mb-4">⏳</div>
+                <p className="text-gray-600">Loading events...</p>
+              </div>
+            ) : error ? (
+              <div className="text-center py-8">
+                <div className="text-4xl mb-4">⚠️</div>
+                <p className="text-gray-600 mb-4">{error}</p>
+                <button
+                  onClick={fetchEvents}
+                  className="px-4 py-2 bg-teal-500 text-white rounded-lg hover:bg-teal-600 transition-colors"
+                >
+                  Retry
+                </button>
+              </div>
+            ) : currentEvents.length === 0 ? (
+              <div className="text-center py-8">
+                <div className="text-4xl mb-4">📅</div>
+                <p className="text-gray-600">
+                  {activeTab === "upcoming"
+                    ? "No upcoming events available"
+                    : "No events available"}
+                </p>
+              </div>
+            ) : (
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={activeTab}
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: 20 }}
+                  transition={{ duration: 0.3 }}
+                  className="flex flex-col gap-3">
+                  {currentEvents.map((event, index) => (
+                    <motion.div
+                      key={event.id}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.3, delay: index * 0.1 }}
+                      onClick={() => setSelectedEventId(event.id)}
+                      whileHover={{ y: -4, boxShadow: "0 8px 16px rgba(0, 0, 0, 0.1)" }}
+                      className={`rounded-lg px-2 lg:px-5 py-4 cursor-pointer transition-all ${
+                        selectedEventId === event.id
+                          ? "bg-teal-50 border-l-4 border-teal-500 shadow-md"
+                          : "bg-gray-50 border-l-4 border-transparent hover:bg-gray-100"
+                      }`}>
+                      <div className="text-xs text-gray-400 mb-1">{formatEventDate(event.created_at)}</div>
+                       <div className="font-semibold text-gray-800 mb-1">
+                         {event.name}
+                       </div>
+                       <div className="text-xs text-gray-500 mb-3">
+                         📍 {event.available_tickets} of {event.total_tickets} tickets available
+                       </div>
+                       <div className="flex gap-4 items-center">
+                         <span
+                           className={`font-semibold text-xs ${getStatusColor(
+                             event.status
+                           )}`}>
+                           {event.status}
+                         </span>
+                         <motion.a
+                           href={`/events/${event.id}`}
+                           className="text-blue-600 text-xs font-medium underline hover:text-blue-700"
+                           whileHover={{ x: 2 }}
+                           whileTap={{ scale: 0.98 }}>
+                           {activeTab === "upcoming"
+                             ? "Register/Tickets →"
+                             : "View Details →"}
+                         </motion.a>
+                       </div>
+                    </motion.div>
+                  ))}
+                </motion.div>
+              </AnimatePresence>
+            )}
           </div>
           {/* Feed Highlights */}
           <motion.div
