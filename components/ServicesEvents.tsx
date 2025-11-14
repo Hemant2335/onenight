@@ -296,7 +296,7 @@ export default function ServicesEvents() {
                            {event.status}
                          </span>
                          <motion.a
-                           href={`/events/${event.id}`}
+                           href={`https://onenightminimalist.vercel.app/`}
                            className="text-blue-600 text-xs font-medium underline hover:text-blue-700"
                            whileHover={{ x: 2 }}
                            whileTap={{ scale: 0.98 }}>
