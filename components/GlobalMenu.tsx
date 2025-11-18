@@ -12,7 +12,7 @@ const GlobalMenu = () => {
     { icon: DollarSign, label: "Invest", href: "#invest" },
     { icon: Calendar, label: "Events", href: "#events" },
     { icon: Film, label: "Studio", href: "#studio" },
-    { icon: Gift, label: "Rewards", href: "/rewards" },
+    { icon: Gift, label: "Rewards", href: "https://onenightminimalist.vercel.app" },
     { icon: Mail, label: "Contact", href: "/contact" },
   ];
 
