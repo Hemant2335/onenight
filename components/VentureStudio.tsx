@@ -235,7 +235,7 @@ export default function VentureStudio() {
           </AnimatePresence>
 
           {/* Contact Button */}
-          <button className="w-full bg-gray-800 text-white font-bold py-4 px-6 rounded-lg text-lg hover:bg-gray-900 transition-colors">
+          <button onClick={() => window.location.href = 'mailto:admin@risedxb.com'} className="w-full bg-gray-800 text-white font-bold py-4 px-6 rounded-lg text-lg hover:bg-gray-900 transition-colors">
             CONTACT US
           </button>
         </motion.div>

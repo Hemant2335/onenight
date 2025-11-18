@@ -132,7 +132,7 @@ export default function Strategy() {
 
         {/* Contact Button */}
         <div className="mt-8">
-          <button className="w-full bg-gray-700 text-white py-4 rounded-lg font-semibold text-sm tracking-wide hover:bg-gray-800 transition-colors">
+          <button onClick={() => window.location.href = 'mailto:admin@risedxb.com'} className="w-full bg-gray-700 text-white py-4 rounded-lg font-semibold text-sm tracking-wide hover:bg-gray-800 transition-colors">
             CONTACT US
           </button>
         </div>
