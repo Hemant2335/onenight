@@ -93,16 +93,35 @@ const servicesByCategory = {
       details: "Real-time health data analytics",
     },
   ],
+  Default: [
+    {
+      title: "RISE Launch Pad (Venture Building)",
+      description: "Creation Meets Market Void",
+      details: "full-scale growth and external capital.",
+    },
+    {
+      title: "RISE Insights (Deep Research)",
+      description:
+        "Meticulous, data-driven analysis: market intelligence and trend forecasting built for future demand, not current noise.",
+      details:''
+    },
+    {
+      title: "RISE Connect (Deal Flow & Acceleration)",
+      description:
+        "Bridging CEOs with Strategic partnerships and Facilitating Fundraising.",
+      details:''
+    },
+  ],
 } as const;
 
 type Category = keyof typeof servicesByCategory;
-const tabs: Category[] = ["Fintech", "Energy", "Space", "Entertainment", "Healthcare"];
+const tabs: Category[] = ["Fintech", "Default", "Energy", "Space", "Entertainment", "Healthcare"];
 
-// Only "Energy" is enabled/functional
-const ENABLED_TABS: readonly Category[] = ["Energy"];
+// Only "Default" and "Energy" are enabled/functional
+const ENABLED_TABS: readonly Category[] = ["Default", "Energy"];
 
 export default function VentureStudio() {
-  const [activeTab, setActiveTab] = useState<Category>("Energy");
+  const [activeTab, setActiveTab] = useState<Category>("Default");
 
   return (
     <motion.section
@@ -236,7 +255,7 @@ export default function VentureStudio() {
                   Sustainability starts with consumption. Our studio actively designs and brings to market patented technologies that drastically cut energy demand across residential, commercial, and industrial sectors.
                   <ul className="list-disc list-inside ml-4 mt-2 space-y-1">
                     <li>
-                      <strong>Invention & Mass Production:</strong> We focus on inventing, investing in, and mass-producing core energy-efficient technologies. This includes smart building materials, advanced HVAC (heating, ventilation, and and air conditioning) systems, optimized IoT (Internet of Things) energy management platforms, and highly efficient motor controls. Our goal is to achieve energy reduction through superior engineering and accessible manufacturing scale.
+                      <strong>Invention & Mass Production:</strong> We focus on inventing, investing in, and mass-producing core energy-efficient technologies. This includes smart building materials, advanced HVAC (heating, ventilation, and air conditioning) systems, optimized IoT (Internet of Things) energy management platforms, and highly efficient motor controls. Our goal is to achieve energy reduction through superior engineering and accessible manufacturing scale.
                     </li>
                   </ul>
                 </li>

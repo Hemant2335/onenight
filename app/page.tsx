@@ -11,7 +11,7 @@ export default function Home() {
         <Header />
       </section>
       
-      <section id="studio" className="min-h-screen snap-start snap-always flex items-center justify-center">
+      <section id="invest" className="min-h-screen snap-start snap-always flex items-center justify-center">
         <div className="w-full max-w-6xl mx-auto p-4 sm:p-8">
           <VentureStudio />
         </div>
@@ -23,7 +23,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section id="invest" className="min-h-screen snap-start snap-always flex items-center justify-center">
+      <section id="studio" className="min-h-screen snap-start snap-always flex items-center justify-center">
         <div className="w-full max-w-6xl mx-auto p-4 sm:p-8">
           <Strategy />
         </div>
