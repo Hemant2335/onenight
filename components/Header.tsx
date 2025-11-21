@@ -6,16 +6,85 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/autoplay';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { publicAPI } from '@/lib/api';
+
+interface CarouselImage {
+  id: string;
+  image_url: string;
+  alt_text?: string;
+  order_index: number;
+}
+
+interface BannerContent {
+  id: string;
+  title: string;
+  subtitle?: string;
+  description?: string;
+  button_text?: string;
+  button_link?: string;
+}
 
 const Header = () => {
-  const images = [
+  const [images, setImages] = useState<CarouselImage[]>([]);
+  const [bannerContent, setBannerContent] = useState<BannerContent | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  // Fallback images in case API fails
+  const fallbackImages = [
     "/assets/banner.jpeg",
     "/assets/Web_Carousal_Ver03_01.jpg",
     "/assets/Web_Carousal_Ver03_03.jpg"
   ];
 
-  const [activeIndex, setActiveIndex] = useState(0);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const [carouselResponse, bannerResponse] = await Promise.all([
+          publicAPI.getCarouselImages(),
+          publicAPI.getBannerContent()
+        ]);
+
+        if (carouselResponse.success && carouselResponse.images && carouselResponse.images.length > 0) {
+          setImages(carouselResponse.images);
+        } else {
+          // Use fallback images if no carousel images are set
+          setImages(fallbackImages.map((url, index) => ({
+            id: `fallback-${index}`,
+            image_url: url,
+            alt_text: 'Dubai Skyline Banner',
+            order_index: index
+          })));
+        }
+
+        if (bannerResponse.success && bannerResponse.banner) {
+          setBannerContent(bannerResponse.banner);
+        }
+      } catch (error) {
+        console.error('Failed to fetch header data:', error);
+        // Use fallback images
+        setImages(fallbackImages.map((url, index) => ({
+          id: `fallback-${index}`,
+          image_url: url,
+          alt_text: 'Dubai Skyline Banner',
+          order_index: index
+        })));
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="w-full h-screen relative text-white bg-gray-900 flex items-center justify-center">
+        <div className="text-white text-xl">Loading...</div>
+      </div>
+    );
+  }
 
   return (
     <div className="w-full h-screen relative text-white">
@@ -32,11 +101,11 @@ const Header = () => {
         onSlideChange={(swiper) => setActiveIndex(swiper.realIndex)}
       >
         {images.map((image, index) => (
-          <SwiperSlide key={index} className="relative h-full">
+          <SwiperSlide key={image.id} className="relative h-full">
             <Image
-              src={image}
+              src={image.image_url}
               fill={true}
-              alt="Dubai Skyline Banner"
+              alt={image.alt_text || "Dubai Skyline Banner"}
               className="object-cover object-center"
               priority
             />
@@ -67,28 +136,50 @@ const Header = () => {
             }}
             className="flex flex-col items-center font-light tracking-wider space-y-2">
             <motion.span className="text-lg md:text-xl text-yellow-100 font-normal">
-              MUSICAL CULTURAL FESTIVAL
+              {bannerContent?.title || "MUSICAL CULTURAL FESTIVAL"}
             </motion.span>
-            <motion.span className="text-md md:text-lg mt-1 text-yellow-100 font-normal">
-              ARTIST REVEAL
-            </motion.span>
-            <motion.span className="text-md md:text-lg text-yellow-100 font-normal">
-              ON 14TH NOV
-            </motion.span>
-            <motion.span className="text-md md:text-lg mt-3 text-gray-400 font-normal">
-              DUBAI ISLANDS
-            </motion.span>
+            {bannerContent?.subtitle && (
+              <motion.span className="text-md md:text-lg mt-1 text-yellow-100 font-normal">
+                {bannerContent.subtitle}
+              </motion.span>
+            )}
+            {bannerContent?.description && (
+              <motion.span className="text-md md:text-lg text-yellow-100 font-normal">
+                {bannerContent.description}
+              </motion.span>
+            )}
+            {!bannerContent && (
+              <>
+                <motion.span className="text-md md:text-lg mt-1 text-yellow-100 font-normal">
+                  ARTIST REVEAL
+                </motion.span>
+                <motion.span className="text-md md:text-lg text-yellow-100 font-normal">
+                  ON 14TH NOV
+                </motion.span>
+                <motion.span className="text-md md:text-lg mt-3 text-gray-400 font-normal">
+                  DUBAI ISLANDS
+                </motion.span>
+              </>
+            )}
           </motion.div>
 
           {/* Find Out More Button */}
-          <motion.button
-            variants={{
-              hidden: { opacity: 0, y: 20 },
-              visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
-            }}
-            className="border border-white/70 text-white px-10 py-3 mt-8 rounded-sm text-sm md:text-base tracking-widest hover:bg-white/10 transition-colors duration-300">
-            FIND OUT MORE
-          </motion.button>
+          {(bannerContent?.button_text || !bannerContent) && (
+            <motion.button
+              variants={{
+                hidden: { opacity: 0, y: 20 },
+                visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
+              }}
+              className="border border-white/70 text-white px-10 py-3 mt-8 rounded-sm text-sm md:text-base tracking-widest hover:bg-white/10 transition-colors duration-300"
+              onClick={() => {
+                if (bannerContent?.button_link) {
+                  window.open(bannerContent.button_link, '_blank');
+                }
+              }}
+            >
+              {bannerContent?.button_text || "FIND OUT MORE"}
+            </motion.button>
+          )}
         </motion.div>
       )}
     </div>

@@ -2,7 +2,7 @@
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect } from "react";
-import { eventsAPI } from "@/lib/api";
+import { eventsAPI, publicAPI } from "@/lib/api";
 
 interface Event {
   id: string;
@@ -15,8 +15,16 @@ interface Event {
   booked_tickets: number;
 }
 
+interface FeedHighlight {
+  id: string;
+  heading: string;
+  link?: string;
+  created_at: string;
+}
+
 export default function ServicesEvents() {
   const [events, setEvents] = useState<Event[]>([]);
+  const [feedHighlights, setFeedHighlights] = useState<FeedHighlight[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [activeTab, setActiveTab] = useState("upcoming");
@@ -24,6 +32,7 @@ export default function ServicesEvents() {
 
   useEffect(() => {
     fetchEvents();
+    fetchFeedHighlights();
   }, []);
 
   const fetchEvents = async () => {
@@ -40,6 +49,15 @@ export default function ServicesEvents() {
       console.error("Error fetching events:", err);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const fetchFeedHighlights = async () => {
+    try {
+      const response = await publicAPI.getFeedHighlights();
+      setFeedHighlights(response.highlights || []);
+    } catch (err: any) {
+      console.error("Error fetching feed highlights:", err);
     }
   };
 
@@ -321,27 +339,25 @@ export default function ServicesEvents() {
               Feed Highlights
             </h4>
             <ul className="text-xs text-gray-600 list-disc list-inside space-y-1">
-              <li>
-                <b>Venture Studio:</b> New Product Launch!{" "}
-                <motion.span
-                  className="underline cursor-pointer text-blue-600 inline-block"
-                  whileHover={{ x: 3 }}>
-                  Read More →
-                </motion.span>
-              </li>
-              <li>
-                <b>Events:</b> Sold Out! Review the highlights from the
-                three-day concert series produced by RISE DXB.{" "}
-                <motion.span
-                  className="underline cursor-pointer text-blue-600 inline-block"
-                  whileHover={{ x: 3 }}>
-                  View Gallery →
-                </motion.span>
-              </li>
-              <li>
-                <b>Studio:</b> Studio begins principal photography on its new
-                documentary
-              </li>
+              {feedHighlights.length > 0 ? (
+                feedHighlights.map((highlight) => (
+                  <li key={highlight.id}>
+                    <span className="font-medium">{highlight.heading}</span>
+                    {highlight.link && (
+                      <motion.a
+                        href={highlight.link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="underline cursor-pointer text-blue-600 inline-block ml-1"
+                        whileHover={{ x: 3 }}>
+                        →
+                      </motion.a>
+                    )}
+                  </li>
+                ))
+              ) : (
+                <li className="text-gray-400 italic">No highlights available</li>
+              )}
             </ul>
           </motion.div>
         </motion.aside>
