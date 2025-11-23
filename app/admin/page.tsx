@@ -51,6 +51,8 @@ const AdminPanel = () => {
     is_active: true
   });
   const [editingCarousel, setEditingCarousel] = useState<CarouselImage | null>(null);
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [uploadLoading, setUploadLoading] = useState(false);
 
   // Banner state
   const [bannerContent, setBannerContent] = useState<BannerContent | null>(null);
@@ -286,6 +288,35 @@ const AdminPanel = () => {
     }
   };
 
+  const handleFileUpload = async () => {
+    if (!selectedFile) return;
+
+    setUploadLoading(true);
+    try {
+      const formData = new FormData();
+      formData.append('file', selectedFile);
+
+      const response = await fetch('/api/upload', {
+        method: 'POST',
+        body: formData,
+      });
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        throw new Error(result.error || 'Upload failed');
+      }
+
+      setCarouselForm({ ...carouselForm, image_url: result.url });
+      setSelectedFile(null);
+      setSuccess('Image uploaded successfully!');
+    } catch (err: any) {
+      setError(err.message || 'Failed to upload image');
+    } finally {
+      setUploadLoading(false);
+    }
+  };
+
   const openEditCarousel = (image: CarouselImage) => {
     setEditingCarousel(image);
     setCarouselForm({
@@ -379,6 +410,7 @@ const AdminPanel = () => {
               setShowCarouselForm(true);
               setEditingCarousel(null);
               setCarouselForm({ image_url: '', alt_text: '', order_index: '', is_active: true });
+              setSelectedFile(null);
             }}
             className="px-6 py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition-colors"
           >
@@ -510,6 +542,29 @@ const AdminPanel = () => {
               </h3>
               <form onSubmit={editingCarousel ? handleUpdateCarouselImage : handleCreateCarouselImage}>
                 <div className="space-y-4">
+                  {!editingCarousel && (
+                    <div>
+                      <label className="block text-gray-300 text-sm font-medium mb-2">
+                        Upload Image
+                      </label>
+                      <input
+                        type="file"
+                        accept="image/*"
+                        onChange={(e) => setSelectedFile(e.target.files?.[0] || null)}
+                        className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-600 file:text-white hover:file:bg-blue-700"
+                      />
+                      {selectedFile && (
+                        <button
+                          type="button"
+                          onClick={handleFileUpload}
+                          disabled={uploadLoading}
+                          className="mt-2 w-full px-4 py-2 bg-green-600 text-white rounded-lg font-semibold hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed"
+                        >
+                          {uploadLoading ? 'Uploading...' : 'Upload to Cloudinary'}
+                        </button>
+                      )}
+                    </div>
+                  )}
                   <div>
                     <label className="block text-gray-300 text-sm font-medium mb-2">
                       Image URL *
@@ -574,6 +629,7 @@ const AdminPanel = () => {
                       setShowCarouselForm(false);
                       setEditingCarousel(null);
                       setCarouselForm({ image_url: '', alt_text: '', order_index: '', is_active: true });
+                      setSelectedFile(null);
                     }}
                     className="px-6 py-3 bg-gray-600 text-white rounded-lg font-semibold hover:bg-gray-700"
                   >
