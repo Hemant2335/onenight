@@ -28,15 +28,24 @@ interface BannerContent {
 const Header = () => {
   const [images, setImages] = useState<CarouselImage[]>([]);
   const [bannerContent, setBannerContent] = useState<BannerContent | null>(null);
-  const [loading, setLoading] = useState(true);
   const [activeIndex, setActiveIndex] = useState(0);
 
-  // Fallback images in case API fails
+  // Fallback images - show immediately
   const fallbackImages = [
     "/assets/banner.jpeg",
     "/assets/Web_Carousal_Ver03_01.jpg",
     "/assets/Web_Carousal_Ver03_03.jpg"
   ];
+
+  // Initialize with fallback images
+  useState(() => {
+    setImages(fallbackImages.map((url, index) => ({
+      id: `fallback-${index}`,
+      image_url: url,
+      alt_text: 'Dubai Skyline Banner',
+      order_index: index
+    })));
+  });
 
   useEffect(() => {
     const fetchData = async () => {
@@ -48,14 +57,6 @@ const Header = () => {
 
         if (carouselResponse.success && carouselResponse.images && carouselResponse.images.length > 0) {
           setImages(carouselResponse.images);
-        } else {
-          // Use fallback images if no carousel images are set
-          setImages(fallbackImages.map((url, index) => ({
-            id: `fallback-${index}`,
-            image_url: url,
-            alt_text: 'Dubai Skyline Banner',
-            order_index: index
-          })));
         }
 
         if (bannerResponse.success && bannerResponse.banner) {
@@ -63,28 +64,12 @@ const Header = () => {
         }
       } catch (error) {
         console.error('Failed to fetch header data:', error);
-        // Use fallback images
-        setImages(fallbackImages.map((url, index) => ({
-          id: `fallback-${index}`,
-          image_url: url,
-          alt_text: 'Dubai Skyline Banner',
-          order_index: index
-        })));
-      } finally {
-        setLoading(false);
+        // Keep fallback images
       }
     };
 
     fetchData();
   }, []);
-
-  if (loading) {
-    return (
-      <div className="w-full h-screen relative text-white bg-gray-900 flex items-center justify-center">
-        <div className="text-white text-xl">Loading...</div>
-      </div>
-    );
-  }
 
   return (
     <div className="w-full h-screen relative text-white">
@@ -107,7 +92,9 @@ const Header = () => {
               fill={true}
               alt={image.alt_text || "Dubai Skyline Banner"}
               className="object-cover object-center"
-              priority
+              priority={true}
+              quality={85}
+              sizes="100vw"
             />
           </SwiperSlide>
         ))}
